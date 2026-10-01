@@ -9,7 +9,7 @@
   "panels": [
     {
       "type": "stat",
-      "title": "Estado Conexión Base de Datos",
+      "title": "Total de Usuarios Registrados",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
       "id": 1,
       "targets": [
@@ -17,14 +17,14 @@
           "datasource": { "type": "postgres", "uid": "PostgreSQL_JoomlaDB" },
           "editorMode": "code",
           "format": "table",
-          "rawSql": "SELECT 1 as estado;",
+          "rawSql": "SELECT COUNT(*) AS value FROM jos_users",
           "refId": "A"
         }
       ]
     },
     {
       "type": "timeseries",
-      "title": "Monitoreo de Sesiones / Tablas",
+      "title": "Sesiones Activas en el Tiempo",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
       "id": 2,
       "targets": [
@@ -32,7 +32,7 @@
           "datasource": { "type": "postgres", "uid": "PostgreSQL_JoomlaDB" },
           "editorMode": "code",
           "format": "time_series",
-          "rawSql": "SELECT NOW() AS time, 10 AS valor;",
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", COUNT(*) AS \"sesiones\" FROM jos_session GROUP BY time ORDER BY time;",
           "refId": "A"
         }
       ]
